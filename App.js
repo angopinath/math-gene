@@ -1,24 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Box from './src/box/box'
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import StyleSheet from "react-native";
+import {
+  Container,
+  View,
+  Text,
+  StyleProvider,
+  Grid,
+  Row,
+  Col,
+  Button,
+} from "native-base";
+import getTheme from "./native-base-theme/components";
+import commoncolor from "./native-base-theme/variables/material";
+import Box from "./src/box/Game";
+import { initGame } from "./src/services/Core";
 
 export default function App() {
+  const vector = 2;
+  const [_listValue, _matrix] = initGame(vector);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <Text>I am editing..</Text>
-      <StatusBar style="auto" />
-      <Box />
-    </View>
+    <StyleProvider style={getTheme(commoncolor)}>
+      <Box listValue={_listValue} matrix={_matrix} />
+    </StyleProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

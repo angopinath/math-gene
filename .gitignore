@@ -9,7 +9,8 @@ npm-debug.*
 *.orig.*
 web-build/
 .vscode/
-yarn.*
+yarn-error.log
+yarn.lock
 
 # macOS
 .DS_Store

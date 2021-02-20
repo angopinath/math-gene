@@ -1,35 +1,54 @@
 import React, { useState } from "react";
-import {} from "react-native";
-import { Container, Button, Text, Icon } from "native-base";
+import { StyleSheet } from "react-native";
+import { Button, Text, Icon } from "@ui-kitten/components";
+
+const buttonStyle = StyleSheet.create({
+  element: {
+    borderRadius: 0,
+    margin: 1,
+  },
+});
 
 const Element = (props) => {
-  var [isClue, setClue] = useState(props.isClue);
-  var [isHidden, setHidden] = useState(props.isHidden);
-  var [value, setValue] = useState(props.value);
-  const [id, setId] = useState(props.id);
-
-  var onButtonClick = () => {
+  const onButtonClick = () => {
     console.log("element is selected");
-    props.onPress(props);
+    props.onPress(props.element);
   };
+  const StarIcon = (props) => (
+    <Icon {...props} name="question-mark-circle-outline" />
+  );
 
-  var getVisibleText = () => {
-    if (isClue) {
+  const getVisibleText = () => {
+    if (props.element.isClue) {
       return (
-        <Button full warning>
-          <Text>{value}</Text>
+        <Button
+          size="small"
+          style={buttonStyle.element}
+          status="warning"
+          appearance="outline"
+        >
+          {props.element.value}
         </Button>
       );
-    } else if (isHidden) {
+    } else if (props.element.isHidden) {
       return (
-        <Button full light>
-          <Text>{value}</Text>
-        </Button>
+        <Button
+          size="small"
+          style={buttonStyle.element}
+          appearance="filled"
+          onPress={onButtonClick}
+          accessoryLeft={StarIcon}
+        ></Button>
       );
     } else {
       return (
-        <Button full info onPress={onButtonClick}>
-          <Icon name="dog" />
+        <Button
+          size="small"
+          appearance="outline"
+          style={buttonStyle.element}
+          disabled={false}
+        >
+          {props.element.value}
         </Button>
       );
     }

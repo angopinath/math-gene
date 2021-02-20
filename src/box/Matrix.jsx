@@ -1,32 +1,68 @@
-import React from "react";
+import React, { forwardRef, useImperativeHandle, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { Button, Layout, Text } from "@ui-kitten/components";
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Element from "./Element";
 
 const Matrix = (props) => {
   return (
-    <Grid>
-      {props.matrix.map((element, ir) => {
+    <Layout style={gridStyle.grid} key={props.fullMatrix}>
+      {props.fullMatrix.map((element, ir) => {
         return (
-          <Row key={ir}>
+          <Layout style={gridStyle.row} key={ir}>
             {element.map((col, ic) => {
               return (
-                <Col key={ic}>
+                <Layout style={gridStyle.col} key={ic}>
                   <Element
                     key={ic}
-                    isHidden={col.isHidden}
-                    isClue={col.isClue}
-                    id={col.id}
-                    value={col.value}
+                    element={col}
                     onPress={props.elementSelection}
                   />
-                </Col>
+                </Layout>
               );
             })}
-          </Row>
+          </Layout>
         );
       })}
-    </Grid>
+    </Layout>
+
+    // <Grid key={props.fullMatrix}>
+    //   {props.fullMatrix.map((element, ir) => {
+    //     return (
+    //       <Row key={ir}>
+    //         {element.map((col, ic) => {
+    //           return (
+    //             <Col key={ic}>
+    //               <Element
+    //                 key={ic}
+    //                 element={col}
+    //                 onPress={props.elementSelection}
+    //               />
+    //             </Col>
+    //           );
+    //         })}
+    //       </Row>
+    //     );
+    //   })}
+    // </Grid>
   );
 };
+
+const gridStyle = StyleSheet.create({
+  grid: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    //justifyContent: "center",
+  },
+  row: {
+    flex: 1,
+    flexDirection: "column",
+    //justifyContent: "flex-start",
+  },
+  col: {
+    //flex: 1,
+  },
+});
 
 export default Matrix;

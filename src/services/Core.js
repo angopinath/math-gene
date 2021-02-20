@@ -1,13 +1,14 @@
 import * as matrix from './Matrix'
 import * as random from './Random'
 
-export function initGame(level) {
+export function generateGame(level, diffLevel) {
     const ground = level
     const dimension =  ground * ground
-    const diffLevel = 0.5
+    const noOfDisableElement = Math.ceil(dimension * diffLevel)
 
     const randomArr = random.getRandomSequanceArray(dimension)
-    const randomBolArr = random.getRandomBoolanArray(dimension, diffLevel)
+    console.log('randomArr', randomArr)
+    const randomBolArr = random.getRandomBoolanArray(dimension, noOfDisableElement)
     const dbolArr = matrix.createBooleanMatrix(randomBolArr, ground)
     
     const darray = matrix.createMatrix(randomArr, ground)
@@ -30,7 +31,7 @@ export function initGame(level) {
     });
     
     dataObjects.unshift(topClues)
-    return [randomArr.sort(), dataObjects]
+    return {possibleValues: randomArr.sort((a,b) => a-b), matrix: dataObjects, noOfHiddenValues: noOfDisableElement}
 }
 
 function createClues(arr) {

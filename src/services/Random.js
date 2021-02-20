@@ -8,10 +8,15 @@ export function getRandomArray(length) {
     return arr
 }
 
-export function getRandomBoolanArray(length, difficutly_level) {
-    var arr = [];
-    for(var i=0; i < length; i++) {
-        arr.push(Math.random() > difficutly_level)
+export function getRandomBoolanArray(length, noOfDisableElement) {
+    var arr = Array(length).fill(0);
+    var i=0;
+    while( i < noOfDisableElement) {
+        const selector = Math.floor(Math.random() * length)
+        if(arr[selector] != 1){
+            arr[selector] = 1
+            i++;
+        } 
     }
     return arr
 }

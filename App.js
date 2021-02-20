@@ -1,28 +1,35 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
-import StyleSheet from "react-native";
+import React, {useState} from "react";
 import {
-  Container,
-  View,
-  Text,
   StyleProvider,
-  Grid,
-  Row,
-  Col,
-  Button,
+  Root
 } from "native-base";
 import getTheme from "./native-base-theme/components";
 import commoncolor from "./native-base-theme/variables/material";
-import Box from "./src/box/Game";
-import { initGame } from "./src/services/Core";
+import Outline from "./src/outline/Outline"
+
+
+import {
+  ApplicationProvider,
+  Layout,
+  Text,
+  Button,
+  ButtonGroup,IconRegistry
+} from "@ui-kitten/components";
+import * as eva from "@eva-design/eva";
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
+
 
 export default function App() {
-  const vector = 2;
-  const [_listValue, _matrix] = initGame(vector);
 
   return (
-    <StyleProvider style={getTheme(commoncolor)}>
-      <Box listValue={_listValue} matrix={_matrix} />
-    </StyleProvider>
+    <>
+    <IconRegistry icons={EvaIconsPack} />
+    <ApplicationProvider {...eva} theme={eva.light}>
+      
+          <Outline />
+        
+    </ApplicationProvider>
+    </>
   );
 }

@@ -40,7 +40,7 @@ const Game = (props) => {
       setTimeout(() => {
         setwonModelVisible(false);
         props.nextLevel();
-      }, 5000);
+      }, 1000);
     }
   }, [noOfHiddenValues]);
 
@@ -50,7 +50,7 @@ const Game = (props) => {
       setTimeout(() => {
         setlostModelVisible(false);
         props.restartLevel();
-      }, 5000);
+      }, 1000);
     }
   }, [falseAttempt]);
 
@@ -114,13 +114,13 @@ const Game = (props) => {
     setwrongAnswerModelVisible(true);
     setTimeout(() => {
       setwrongAnswerModelVisible(false);
-    }, 2000);
+    }, 100);
   };
   const toggleCorrectAnswerModelVisible = () => {
     setcorrectAnswerModelVisible(true);
     setTimeout(() => {
       setcorrectAnswerModelVisible(false);
-    }, 2000);
+    }, 100);
   };
 
   return (

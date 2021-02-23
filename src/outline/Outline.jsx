@@ -1,24 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
+
 import {
-  Container,
   Text,
-  StyleProvider,
-  Grid,
-  Row,
-  Col,
-  Button,
-  Root,
-  Header,
-  Left,
-  Content,
-  Icon,
-  Right,
-  Body,
-  Title,
-} from "native-base";
-import {
-  Layout,
   TopNavigation,
   TopNavigationAction,
 } from "@ui-kitten/components";
@@ -82,10 +66,14 @@ export default function Outline() {
   return (
     <>
       <TopNavigation
-        style={{ marginTop: 20 }}
+        style={styles.topnav}
         alignment="center"
-        title="Matrix Adder"
-        subtitle={getLevelString()}
+        title={(evaProps) => (
+          <Text category="h1" {...evaProps}>
+            Matrix Adder
+          </Text>
+        )}
+        subtitle={(evaProps) => <Text {...evaProps}>{getLevelString()}</Text>}
         accessoryLeft={renderBackAction}
         accessoryRight={renderRightActions}
       />
@@ -99,5 +87,13 @@ export default function Outline() {
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  backgroundimage: {
+    flex: 1,
+    resizeMode: "cover",
+  },
+  topnav: {
+    margin: 15,
+    marginTop: 20,
+    borderRadius: 3,
+  },
 });

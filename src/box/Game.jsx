@@ -125,22 +125,23 @@ const Game = (props) => {
 
   return (
     <React.Fragment>
-      <Layout style={styles.container}>
-        <Layout style={styles.clueLayer}>
+      <Layout style={[styles.container, styles.transparent]}>
+        <Layout style={[styles.clueLayer, styles.transparent]}>
           <PossibleValues
             onPossibleValueClick={onAnsSelectionCallback}
             isShow={isPossibleValuesShow}
             values={possibleValues}
           />
         </Layout>
-        <Layout style={styles.matrixLayer}>
+        <Layout style={[styles.matrixLayer, styles.transparent]}>
           <Matrix
             key={matrix}
             fullMatrix={matrix}
+            selElement={selectedElement}
             elementSelection={onElementSelectionCallback}
           />
         </Layout>
-        <Layout style={styles.actionLayer}>
+        <Layout style={[styles.actionLayer, styles.transparent]}>
           <Button
             style={styles.button}
             status="danger"
@@ -227,7 +228,7 @@ const Game = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 10,
+    padding: 10,
   },
   backdrop: {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -237,8 +238,9 @@ const styles = StyleSheet.create({
     flex: 0.2,
   },
   matrixLayer: {
-    flex: 0.8,
+    flex: 0.6,
     justifyContent: "center",
+    alignItems: "center",
   },
   actionLayer: {
     flex: 0.1,
@@ -257,6 +259,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  transparent: {
+    backgroundColor: "transparent",
   },
 });
 export default Game;

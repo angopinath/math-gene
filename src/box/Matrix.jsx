@@ -1,7 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, Layout, Text } from "@ui-kitten/components";
-import { Col, Row, Grid } from "react-native-easy-grid";
 import Element from "./Element";
 
 const Matrix = (props) => {
@@ -16,6 +15,7 @@ const Matrix = (props) => {
                   <Element
                     key={ic}
                     element={col}
+                    selElement={props.selElement}
                     onPress={props.elementSelection}
                   />
                 </Layout>
@@ -25,26 +25,6 @@ const Matrix = (props) => {
         );
       })}
     </Layout>
-
-    // <Grid key={props.fullMatrix}>
-    //   {props.fullMatrix.map((element, ir) => {
-    //     return (
-    //       <Row key={ir}>
-    //         {element.map((col, ic) => {
-    //           return (
-    //             <Col key={ic}>
-    //               <Element
-    //                 key={ic}
-    //                 element={col}
-    //                 onPress={props.elementSelection}
-    //               />
-    //             </Col>
-    //           );
-    //         })}
-    //       </Row>
-    //     );
-    //   })}
-    // </Grid>
   );
 };
 
@@ -53,12 +33,13 @@ const gridStyle = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    //justifyContent: "center",
+    justifyContent: "center",
+    backgroundColor: "transparent",
   },
   row: {
     flex: 1,
     flexDirection: "column",
-    //justifyContent: "flex-start",
+    justifyContent: "flex-start",
   },
   col: {
     //flex: 1,

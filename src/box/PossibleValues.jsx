@@ -60,7 +60,7 @@ const PossibleValues1 = (props) => {
       <ButtonGroup
         style={{ margin: 2 }}
         key={index}
-        appearance="outline"
+        appearance="filled"
         status="success"
         size="tiny"
       >
@@ -70,7 +70,14 @@ const PossibleValues1 = (props) => {
   });
 
   return (
-    <Layout style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <Layout
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "transparent",
+      }}
+    >
       {buttonGroupList}
     </Layout>
   );

@@ -114,13 +114,13 @@ const Game = (props) => {
     setwrongAnswerModelVisible(true);
     setTimeout(() => {
       setwrongAnswerModelVisible(false);
-    }, 100);
+    }, 1000);
   };
   const toggleCorrectAnswerModelVisible = () => {
     setcorrectAnswerModelVisible(true);
     setTimeout(() => {
       setcorrectAnswerModelVisible(false);
-    }, 100);
+    }, 1000);
   };
 
   return (

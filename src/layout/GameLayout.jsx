@@ -13,21 +13,14 @@ import { generateGame } from "../services/Core";
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
 const ResetIcon = (props) => <Icon {...props} name="refresh" />;
 
-export default function Outline() {
-  //const vector = 2;
-  //const diffLevel = 0.1;
-  //const gameValues = generateGame(vector, diffLevel);
-  const highLevel = 5;
-  const highDiffLevel = 0.6;
-  const lowLevel = 2;
-  const lowDiffLevel = 0.2;
-  const [vector, setVector] = useState(lowLevel);
-  const [diffLevel, setDiffLevel] = useState(lowDiffLevel);
-  const [gameValues, setGameValues] = useState(generateGame(vector, diffLevel));
+export default function GameLayout({ route, navigation }) {
+  const { vector, level } = route.params;
+  console.log(vector, level);
+  const [gameValues, setGameValues] = useState(generateGame(vector, level));
   const [levelCounter, setLevelCounter] = useState(1);
 
   var initGame = () => {
-    const _gameValues = generateGame(vector, diffLevel);
+    const _gameValues = generateGame(vector, level);
     setGameValues(_gameValues);
   };
 
@@ -36,19 +29,7 @@ export default function Outline() {
     initGame();
   };
 
-  var nextLevelDiffDecider = () => {
-    if (highDiffLevel == diffLevel) {
-      if (highLevel > vector) {
-        setVector(vector + 1);
-        setDiffLevel(lowDiffLevel);
-      }
-    } else {
-      setDiffLevel(diffLevel + 0.1);
-    }
-  };
-
   var playNextLevel = () => {
-    nextLevelDiffDecider();
     setLevelCounter(levelCounter + 1);
     initGame();
   };

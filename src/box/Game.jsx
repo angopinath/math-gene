@@ -4,6 +4,8 @@ import { Modal, Card, Button, Icon, Layout, Text } from "@ui-kitten/components";
 
 import PossibleValues from "./PossibleValues";
 import Matrix from "./Matrix";
+import { PopupModel } from "./Model";
+import AppStyle from "../style/AppStyle";
 
 const Game = (props) => {
   const [possibleValues, setPossibleValues] = useState(
@@ -14,7 +16,6 @@ const Game = (props) => {
     props.gameInput.noOfHiddenValues
   );
   const [selectedElement, setSelectedElement] = useState({});
-  const [selectAns, setSelectedAns] = useState(0);
   const [falseAttempt, setFalseAttempt] = useState(3);
   const [isPossibleValuesShow, setPossibleValuesShow] = useState(false);
 
@@ -40,7 +41,7 @@ const Game = (props) => {
       setTimeout(() => {
         setwonModelVisible(false);
         props.nextLevel();
-      }, 1000);
+      }, 3000);
     }
   }, [noOfHiddenValues]);
 
@@ -50,23 +51,12 @@ const Game = (props) => {
       setTimeout(() => {
         setlostModelVisible(false);
         props.restartLevel();
-      }, 1000);
+      }, 3000);
     }
   }, [falseAttempt]);
 
-  useEffect(() => {
-    console.log("selection effect");
-    if (validateSelection()) {
-      let newMatrix = matrixRerender(selectedElement.id);
-      setPossibleValuesShow(false);
-      setMatrix(newMatrix);
-      setNoOfHiddenValues(noOfHiddenValues - 1);
-    }
-  }, [selectAns]);
-
   var reset = () => {
     setSelectedElement({});
-    setSelectedAns(0);
     setFalseAttempt(3);
     setPossibleValuesShow(false);
     setwonModelVisible(false);
@@ -85,24 +75,27 @@ const Game = (props) => {
     console.log("new matrix", newMatrix);
     return newMatrix;
   };
-  var validateSelection = () => {
-    console.log("selected element", selectedElement, "selected ans", selectAns);
-    if (selectedElement && selectAns) {
-      if (selectedElement.value == selectAns) {
-        console.log("correct ans");
-        toggleCorrectAnswerModelVisible();
-        return true;
-      } else {
-        console.log("wrong answer.. try again");
-        toggleWrongAnswerModelVisible();
-        setFalseAttempt(falseAttempt - 1);
-        return false;
-      }
-    }
-  };
   const onAnsSelectionCallback = (val) => {
     console.log("on ans select clicked", val);
-    setSelectedAns(val);
+    console.log("selected element", selectedElement, "selected ans", val);
+    if (selectedElement && val) {
+      setPossibleValuesShow(false);
+
+      if (selectedElement.value == val) {
+        console.log("correct ans");
+        setwrongAnswerModelVisible(false);
+        setcorrectAnswerModelVisible(true);
+        setMatrix(matrixRerender(selectedElement.id));
+        setNoOfHiddenValues(noOfHiddenValues - 1);
+      } else {
+        console.log("wrong answer.. try again");
+
+        setcorrectAnswerModelVisible(false);
+        setwrongAnswerModelVisible(true);
+        setFalseAttempt(falseAttempt - 1);
+      }
+      setSelectedElement({});
+    }
   };
 
   const onElementSelectionCallback = (el) => {
@@ -110,28 +103,57 @@ const Game = (props) => {
     setSelectedElement(el);
   };
 
-  const toggleWrongAnswerModelVisible = () => {
-    setwrongAnswerModelVisible(true);
-    setTimeout(() => {
-      setwrongAnswerModelVisible(false);
-    }, 1000);
-  };
-  const toggleCorrectAnswerModelVisible = () => {
-    setcorrectAnswerModelVisible(true);
-    setTimeout(() => {
-      setcorrectAnswerModelVisible(false);
-    }, 1000);
+  const heartCounts = () => {
+    return (
+      <Layout style={[AppStyle.layoutBackground, AppStyle.gameHeartLayout]}>
+        {Array(falseAttempt)
+          .fill(0)
+          .map((i, index) => {
+            return (
+              <Icon
+                style={AppStyle.gameHeart}
+                key={index}
+                fill="#FF3D71"
+                name="heart"
+              />
+            );
+          })}
+      </Layout>
+    );
   };
 
   return (
     <React.Fragment>
       <Layout style={[styles.container, styles.transparent]}>
         <Layout style={[styles.clueLayer, styles.transparent]}>
-          <PossibleValues
-            onPossibleValueClick={onAnsSelectionCallback}
-            isShow={isPossibleValuesShow}
-            values={possibleValues}
-          />
+          {isPossibleValuesShow ? (
+            <PossibleValues
+              onPossibleValueClick={onAnsSelectionCallback}
+              isShow={isPossibleValuesShow}
+              values={possibleValues}
+            />
+          ) : (
+            <Layout style={[styles.clueLayer, styles.transparent]}>
+              {correctAnswerModelVisible && (
+                <Text
+                  category="h5"
+                  status="success"
+                  style={{ alignSelf: "center" }}
+                >
+                  Awesome.. Keep Going..
+                </Text>
+              )}
+              {wrongAnswerModelVisible && (
+                <Text
+                  category="h5"
+                  status="warning"
+                  style={{ alignSelf: "center" }}
+                >
+                  Losing my heart, Try Hard
+                </Text>
+              )}
+            </Layout>
+          )}
         </Layout>
         <Layout style={[styles.matrixLayer, styles.transparent]}>
           <Matrix
@@ -142,13 +164,7 @@ const Game = (props) => {
           />
         </Layout>
         <Layout style={[styles.actionLayer, styles.transparent]}>
-          <Button
-            style={styles.button}
-            status="danger"
-            accessoryRight={(props) => <Icon {...props} name="heart" />}
-          >
-            {falseAttempt}
-          </Button>
+          {heartCounts()}
           <Button
             style={styles.button}
             status="info"
@@ -160,64 +176,28 @@ const Game = (props) => {
             accessoryLeft={(props) => <Icon {...props} name="question-mark" />}
           ></Button>
           <React.Fragment>
-            <Modal
+            <PopupModel
               visible={wonModelVisible}
-              backdropStyle={styles.backdrop}
-              style={styles.model}
-            >
-              <Layout style={styles.model}>
-                {/* <Icon name="smiling-face-outline" /> */}
-                <Text category="h2" status="success">
-                  Congrats
-                </Text>
-                <Text category="h4" status="success">
-                  Level complated
-                </Text>
-                <Text category="label">Loading Next Level..</Text>
-              </Layout>
-            </Modal>
-            <Modal visible={lostModelVisible} backdropStyle={styles.backdrop}>
-              <Layout style={styles.model}>
-                {/* <Icon name="shield-off"></Icon> */}
-                <Text category="h2" status="danger">
-                  Oh.. Noo..
-                </Text>
-                <Text category="h4" status="danger">
-                  You Lost
-                </Text>
-                <Text category="label">Reloading new level..</Text>
-              </Layout>
-            </Modal>
-            <Modal
-              visible={correctAnswerModelVisible}
-              backdropStyle={styles.backdrop}
-            >
-              <Layout style={styles.model}>
-                {/* <Icon name="checkmark-circle-2"></Icon> */}
-                <Text category="h2" status="success">
-                  Awsome
-                </Text>
-                <Text category="h4" status="success">
-                  Correct Answer
-                </Text>
-                <Text category="label">Keep Rocking..</Text>
-              </Layout>
-            </Modal>
-            <Modal
-              visible={wrongAnswerModelVisible}
-              backdropStyle={styles.backdrop}
-            >
-              <Layout style={styles.model}>
-                {/* <Icon {...props} name="close-circle" /> */}
-                <Text category="h2" status="danger">
-                  Oops..
-                </Text>
-                <Text category="h4" status="danger">
-                  Wrong Answer
-                </Text>
-                <Text category="label">loosing one life..</Text>
-              </Layout>
-            </Modal>
+              data={{
+                type: "success",
+                msg: {
+                  header: "Congratulations..!",
+                  txt: "Loading new Level..",
+                },
+                backtrop: true,
+              }}
+            />
+            <PopupModel
+              visible={lostModelVisible}
+              data={{
+                type: "danger",
+                msg: {
+                  header: "You Lost..!",
+                  txt: "Reloading new Level..",
+                },
+                backtrop: true,
+              }}
+            />
           </React.Fragment>
         </Layout>
       </Layout>
@@ -236,6 +216,7 @@ const styles = StyleSheet.create({
 
   clueLayer: {
     flex: 0.2,
+    justifyContent: "center",
   },
   matrixLayer: {
     flex: 0.6,

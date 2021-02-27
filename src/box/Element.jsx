@@ -6,20 +6,32 @@ const buttonStyle = StyleSheet.create({
   element: {
     borderRadius: 0,
     margin: 1,
+    //height: 50,
+    //width: 50,
   },
 });
 
 const Element = (props) => {
   const theme = useTheme();
-  //useEffect(() => {}, [props]);
 
   const onButtonClick = () => {
     console.log("element is selected");
     props.onPress(props.element);
   };
-  const StarIcon = (props) => (
-    <Icon {...props} name="question-mark-circle-outline" animation="pulse" />
-  );
+
+  const hiddenBtnIcon = (pr) => {
+    return (
+      <Icon
+        style={{ margin: 0 }}
+        {...pr}
+        name={
+          props.element.id == props.selElement.id
+            ? "eye-outline"
+            : "question-mark-circle-outline"
+        }
+      />
+    );
+  };
 
   const getVisibleText = () => {
     if (props.element.isClue) {
@@ -42,13 +54,13 @@ const Element = (props) => {
             {
               backgroundColor:
                 props.element.id == props.selElement.id
-                  ? theme["color-primary-active"]
-                  : theme["color-primary-default"],
+                  ? theme["color-info-active"]
+                  : theme["color-info-default"],
             },
           ]}
           appearance="filled"
           onPress={onButtonClick}
-          accessoryLeft={StarIcon}
+          accessoryLeft={hiddenBtnIcon}
         ></Button>
       );
     } else {
@@ -56,6 +68,7 @@ const Element = (props) => {
         <Button
           size="small"
           appearance="outline"
+          status="info"
           style={buttonStyle.element}
           disabled={false}
         >

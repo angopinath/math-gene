@@ -1,63 +1,55 @@
 import React from "react";
 import { Button, Layout, Text } from "@ui-kitten/components";
+import { LinearGradient } from "expo-linear-gradient";
 
 import AppStyle from "../style/AppStyle";
+import { gameCategoryEnum } from "../services/gameTypes";
 import { Image } from "react-native";
 
 export default function CategoryLayout({ route, navigation }) {
+  const { type } = route.params;
   const navigateToLevel = (x) => {
-    navigation.navigate("GameLevel", { vector: x });
+    navigation.navigate("GameLevel", { vector: x, type: type });
+  };
+
+  const listCategories = () => {
+    return gameCategoryEnum().map((cat, i) => {
+      return (
+        <Button
+          key={i}
+          appearance="filled"
+          size="medium"
+          status="info"
+          style={AppStyle.buttonLayout}
+          onPress={() => navigateToLevel(cat)}
+        >
+          {cat.name}
+        </Button>
+      );
+    });
   };
   return (
     <React.Fragment>
-      <Layout style={[AppStyle.layoutBackground, AppStyle.pageLayout]}>
-        <Layout style={[AppStyle.layoutBackground, AppStyle.logoLayout]}>
-          <Image
-            style={AppStyle.logoStyle}
-            source={require("../../assets/logo.png")}
-          />
-          <Text category="h1" status="info">
-            Category
-          </Text>
+      <LinearGradient
+        colors={["#F761A1", "#8C1BAB"]}
+        style={AppStyle.background}
+        locations={[0.1, 1]}
+      >
+        <Layout style={[AppStyle.layoutBackground, AppStyle.pageLayout]}>
+          <Layout style={[AppStyle.layoutBackground, AppStyle.logoLayout]}>
+            <Image
+              style={AppStyle.logoStyle}
+              source={require("../../assets/logo.png")}
+            />
+            <Text category="h5" style={AppStyle.headerText}>
+              Category
+            </Text>
+          </Layout>
+          <Layout style={[AppStyle.layoutBackground]}>
+            {listCategories()}
+          </Layout>
         </Layout>
-
-        <Button
-          appearance="outline"
-          size="medium"
-          status="info"
-          style={AppStyle.buttonLayout}
-          onPress={() => navigateToLevel(2)}
-        >
-          2 X 2
-        </Button>
-        <Button
-          appearance="outline"
-          size="medium"
-          status="info"
-          style={AppStyle.buttonLayout}
-          onPress={() => navigateToLevel(3)}
-        >
-          3 X 3
-        </Button>
-        <Button
-          appearance="outline"
-          size="medium"
-          status="info"
-          style={AppStyle.buttonLayout}
-          onPress={() => navigateToLevel(4)}
-        >
-          4 X 4
-        </Button>
-        <Button
-          appearance="outline"
-          size="medium"
-          status="info"
-          style={AppStyle.buttonLayout}
-          onPress={() => navigateToLevel(5)}
-        >
-          5 X 5
-        </Button>
-      </Layout>
+      </LinearGradient>
     </React.Fragment>
   );
 }

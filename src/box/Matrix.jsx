@@ -37,9 +37,9 @@ const gridStyle = StyleSheet.create({
     backgroundColor: "transparent",
   },
   row: {
-    flex: 1,
+    //flex: 1,
     flexDirection: "column",
-    justifyContent: "flex-start",
+    //justifyContent: "center",
   },
   col: {
     //flex: 1,

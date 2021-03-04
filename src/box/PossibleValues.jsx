@@ -62,7 +62,7 @@ const PossibleValues1 = (props) => {
         key={index}
         appearance="filled"
         status="success"
-        size="tiny"
+        size={length > 16 ? "tiny" : "small"}
       >
         {buttonList(btnarr)}
       </ButtonGroup>

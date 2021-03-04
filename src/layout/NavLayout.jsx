@@ -6,6 +6,7 @@ import GameLayout from "./GameLayout";
 import TypeLayout from "./TypeLayout";
 import CategoryLayout from "./CategoryLayout";
 import LevelLayout from "./LevelLayout";
+import HowTo from "./HowTo";
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,11 @@ export const NavLayout = () => {
         <Stack.Screen
           name="GameLayout"
           component={GameLayout}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="HowTo"
+          component={HowTo}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

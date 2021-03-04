@@ -61,6 +61,10 @@ const AppStyle = StyleSheet.create({
     height: 100,
     color: "black",
   },
+  howto_button_text: { color: "white", fontSize: 14, fontWeight: "bold" },
+  card: {
+    margin: 10,
+  },
 });
 
 export default AppStyle;

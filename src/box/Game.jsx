@@ -165,14 +165,15 @@ const Game = (props) => {
         </Layout>
         <Layout style={[styles.actionLayer, styles.transparent]}>
           {heartCounts()}
-          <Button
+          {/* <Button
             style={styles.button}
             status="info"
             accessoryLeft={(props) => <Icon {...props} name="bulb" />}
-          ></Button>
+          ></Button> */}
           <Button
             style={styles.button}
             status="warning"
+            onPress={() => props.howToNav()}
             accessoryLeft={(props) => <Icon {...props} name="question-mark" />}
           ></Button>
           <React.Fragment>

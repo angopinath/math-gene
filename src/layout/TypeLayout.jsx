@@ -30,9 +30,9 @@ export default function TypeLayout({ route, navigation }) {
   return (
     <React.Fragment>
       <LinearGradient
-        colors={["#F761A1", "#8C1BAB"]}
+        colors={["#206AFF", "#BE26FF"]}
         style={AppStyle.background}
-        locations={[0.1, 1]}
+        locations={[0.1, 0.84]}
       >
         <Layout style={[AppStyle.layoutBackground, AppStyle.pageLayout]}>
           <Layout style={[AppStyle.layoutBackground, AppStyle.logoLayout]}>
@@ -45,7 +45,17 @@ export default function TypeLayout({ route, navigation }) {
             </Text>
           </Layout>
 
-          <Layout style={[AppStyle.layoutBackground]}>{listTypes()}</Layout>
+          <Layout style={[AppStyle.layoutBackground]}>
+            {listTypes()}
+            <Button
+              appearance="ghost"
+              size="medium"
+              style={[AppStyle.buttonLayout]}
+              onPress={() => navigation.navigate("HowTo")}
+            >
+              <Text style={AppStyle.howto_button_text}>How-To ?</Text>
+            </Button>
+          </Layout>
         </Layout>
       </LinearGradient>
     </React.Fragment>

@@ -31,9 +31,9 @@ export default function CategoryLayout({ route, navigation }) {
   return (
     <React.Fragment>
       <LinearGradient
-        colors={["#F761A1", "#8C1BAB"]}
+        colors={["#206AFF", "#BE26FF"]}
         style={AppStyle.background}
-        locations={[0.1, 1]}
+        locations={[0.1, 0.84]}
       >
         <Layout style={[AppStyle.layoutBackground, AppStyle.pageLayout]}>
           <Layout style={[AppStyle.layoutBackground, AppStyle.logoLayout]}>

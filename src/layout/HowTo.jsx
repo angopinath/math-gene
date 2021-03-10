@@ -1,10 +1,18 @@
-import { Card, Layout, Text } from "@ui-kitten/components";
+import { Card, Divider, Layout, ListItem, Text } from "@ui-kitten/components";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { ScrollView } from "react-native";
 import AppStyle from "../style/AppStyle";
+import {
+  gameTypeEnum,
+  gameCategoryEnum,
+  gameLevelEnum,
+} from "../services/gameTypes";
 
 export default function HowTo() {
+  const renderItem = ({ item, index }) => (
+    <ListItem title={`${item.name}`} description={`${item.description}`} />
+  );
   const Header = (title) => {
     return (
       <React.Fragment>
@@ -48,38 +56,35 @@ export default function HowTo() {
               header={() => Header("Overview: Mine Matrix")}
             >
               <Text>
-                The Maldives, officially the Republic of Maldives, is a small
-                country in South Asia, located in the Arabian Sea of the Indian
-                Ocean. It lies southwest of Sri Lanka and India, about 1,000
-                kilometres (620 mi) from the Asian continent
+                Mine Matrix - is a Puzzle Game. Build with matrix. Hidden
+                Element can be mined with help of Non-hidden elements and Clues.
+                Mine Matrix, have various types, flavours and difficulty levels.
+                Love Gaming
               </Text>
             </Card>
             <Card style={AppStyle.card} header={() => Header("Game Types")}>
-              <Text>
-                The Maldives, officially the Republic of Maldives, is a small
-                country in South Asia, located in the Arabian Sea of the Indian
-                Ocean. It lies southwest of Sri Lanka and India, about 1,000
-                kilometres (620 mi) from the Asian continent
-              </Text>
+              <List
+                data={gameTypeEnum}
+                ItemSeparatorComponent={Divider}
+                renderItem={renderItem}
+              />
             </Card>
             <Card
               style={AppStyle.card}
               header={() => Header("Game Categories")}
             >
-              <Text>
-                The Maldives, officially the Republic of Maldives, is a small
-                country in South Asia, located in the Arabian Sea of the Indian
-                Ocean. It lies southwest of Sri Lanka and India, about 1,000
-                kilometres (620 mi) from the Asian continent
-              </Text>
+              <List
+                data={gameCategoryEnum}
+                ItemSeparatorComponent={Divider}
+                renderItem={renderItem}
+              />
             </Card>
             <Card style={AppStyle.card} header={() => Header("Game Level")}>
-              <Text>
-                The Maldives, officially the Republic of Maldives, is a small
-                country in South Asia, located in the Arabian Sea of the Indian
-                Ocean. It lies southwest of Sri Lanka and India, about 1,000
-                kilometres (620 mi) from the Asian continent
-              </Text>
+              <List
+                data={gameLevelEnum}
+                ItemSeparatorComponent={Divider}
+                renderItem={renderItem}
+              />
             </Card>
             <Card style={AppStyle.card} header={() => Header("Game Play")}>
               <Text>

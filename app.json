@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Mine Matrix",
-    "slug": "Matrix-Game",
+    "slug": "Mine-Matrix",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

@@ -182,7 +182,7 @@ const Game = (props) => {
               data={{
                 type: "success",
                 msg: {
-                  header: "Congratulations..!",
+                  header: "Congrats..!",
                   txt: "Loading new Level..",
                 },
                 backtrop: true,
@@ -194,7 +194,7 @@ const Game = (props) => {
                 type: "danger",
                 msg: {
                   header: "You Lost..!",
-                  txt: "Reloading new Level..",
+                  txt: "Reloading..",
                 },
                 backtrop: true,
               }}

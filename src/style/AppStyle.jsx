@@ -65,6 +65,10 @@ const AppStyle = StyleSheet.create({
   card: {
     margin: 10,
   },
+  devider: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
 });
 
 export default AppStyle;

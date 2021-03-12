@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 export const NavLayout = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="HowTo">
+      <Stack.Navigator initialRouteName="GameType">
         <Stack.Screen
           name="GameType"
           component={TypeLayout}

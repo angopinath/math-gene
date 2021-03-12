@@ -18,30 +18,82 @@ import {
 import Matrix from "../box/Matrix";
 
 export default function HowTo() {
-  const clueMatrix = [[{ id: "0", isClue: true, isHidden: false, value: "6" }]];
+  const clueMatrix = [
+    [{ id: "0c", isClue: true, isHidden: false, value: "6" }],
+  ];
   const elementMatrix = [
-    [{ id: "0", isClue: false, isHidden: false, value: "1" }],
+    [{ id: "0e", isClue: false, isHidden: false, value: "1" }],
   ];
   const hiddenElementMatrix = [
-    [{ id: "0", isClue: false, isHidden: true, value: "1" }],
+    [{ id: "h0h", isClue: false, isHidden: true, value: "1" }],
   ];
   const rowSumMatrixValue = [
     [
-      { id: "0", isClue: true, isHidden: false, value: "6" },
-      { id: "1", isClue: false, isHidden: false, value: "1" },
-      { id: "2", isClue: false, isHidden: false, value: "+" },
-      { id: "3", isClue: false, isHidden: true, value: "2" },
-      { id: "4", isClue: false, isHidden: false, value: "+" },
-      { id: "5", isClue: false, isHidden: false, value: "3" },
+      { id: "r0", isClue: true, isHidden: false, value: "6" },
+      { id: "r1", isClue: false, isHidden: false, value: "1" },
+      { id: "r2", isClue: false, isHidden: false, value: "+" },
+      { id: "r3", isClue: false, isHidden: true, value: "2" },
+      { id: "r4", isClue: false, isHidden: false, value: "+" },
+      { id: "r5", isClue: false, isHidden: false, value: "3" },
     ],
   ];
   const columnSumMatrixValue = [
-    [{ id: "0", isClue: true, isHidden: false, value: "6" }],
-    [{ id: "1", isClue: false, isHidden: false, value: "1" }],
-    [{ id: "2", isClue: false, isHidden: false, value: "+" }],
-    [{ id: "3", isClue: false, isHidden: true, value: "2" }],
-    [{ id: "4", isClue: false, isHidden: false, value: "+" }],
-    [{ id: "5", isClue: false, isHidden: false, value: "3" }],
+    [{ id: "c0", isClue: true, isHidden: false, value: "6" }],
+    [{ id: "c1", isClue: false, isHidden: false, value: "1" }],
+    [{ id: "c2", isClue: false, isHidden: false, value: "+" }],
+    [{ id: "c3", isClue: false, isHidden: true, value: "2" }],
+    [{ id: "c4", isClue: false, isHidden: false, value: "+" }],
+    [{ id: "c5", isClue: false, isHidden: false, value: "3" }],
+  ];
+  const diagonalSumMatrixValue = [
+    [
+      { id: "a0", isClue: true, isHidden: false, value: "6" },
+      { id: "a1", isClue: true, isHidden: false, value: "" },
+      { id: "a2", isClue: true, isHidden: false, value: "" },
+      { id: "a3", isClue: true, isHidden: false, value: "" },
+      { id: "a4", isClue: true, isHidden: false, value: "" },
+      { id: "a5", isClue: true, isHidden: false, value: "" },
+    ],
+    [
+      { id: "b1", isClue: true, isHidden: false, value: "" },
+      { id: "b2", isClue: false, isHidden: false, value: "1" },
+      { id: "b3", isClue: false, isHidden: false, value: "" },
+      { id: "b4", isClue: false, isHidden: false, value: "" },
+      { id: "b5", isClue: false, isHidden: false, value: "" },
+      { id: "b6", isClue: false, isHidden: false, value: "" },
+    ],
+    [
+      { id: "c1", isClue: true, isHidden: false, value: "" },
+      { id: "c2", isClue: false, isHidden: false, value: "" },
+      { id: "c3", isClue: false, isHidden: false, value: "+" },
+      { id: "c4", isClue: false, isHidden: false, value: "" },
+      { id: "c5", isClue: false, isHidden: false, value: "" },
+      { id: "c6", isClue: false, isHidden: false, value: "" },
+    ],
+    [
+      { id: "d1", isClue: true, isHidden: false, value: "" },
+      { id: "d2", isClue: false, isHidden: false, value: "" },
+      { id: "d3", isClue: false, isHidden: false, value: "" },
+      { id: "d4", isClue: false, isHidden: true, value: "2" },
+      { id: "d42", isClue: false, isHidden: false, value: "" },
+      { id: "d52", isClue: false, isHidden: false, value: "" },
+    ],
+    [
+      { id: "e11", isClue: true, isHidden: false, value: "" },
+      { id: "e22", isClue: false, isHidden: false, value: "" },
+      { id: "e32", isClue: false, isHidden: false, value: "" },
+      { id: "e42", isClue: false, isHidden: false, value: "" },
+      { id: "e54", isClue: false, isHidden: false, value: "+" },
+      { id: "e62", isClue: false, isHidden: false, value: "" },
+    ],
+    [
+      { id: "f11", isClue: true, isHidden: false, value: "" },
+      { id: "f22", isClue: false, isHidden: false, value: "" },
+      { id: "f32", isClue: false, isHidden: false, value: "" },
+      { id: "f42", isClue: false, isHidden: false, value: "" },
+      { id: "f52", isClue: false, isHidden: false, value: "" },
+      { id: "f65", isClue: false, isHidden: false, value: "3" },
+    ],
   ];
   const MatrixDesc = (val) => {
     return (
@@ -56,7 +108,7 @@ export default function HowTo() {
 
   const renderItem = ({ item, index }) => (
     <>
-      <ListItem title={item.name} description={item.description} />
+      <ListItem key={item} title={item.name} description={item.description} />
     </>
   );
   const Header = (title) => {
@@ -95,6 +147,7 @@ export default function HowTo() {
             style={[AppStyle.layoutBackground, { marginTop: 30, flex: 1 }]}
           >
             <Card
+              key="overview"
               style={AppStyle.card}
               header={() => Header("Overview: Mine Matrix")}
             >
@@ -130,7 +183,11 @@ export default function HowTo() {
                 clues and non-hidden elements
               </Text>
             </Card>
-            <Card style={AppStyle.card} header={() => Header("Game Types")}>
+            <Card
+              key="types"
+              style={AppStyle.card}
+              header={() => Header("Game Types")}
+            >
               <List
                 style={AppStyle.list}
                 data={gameTypeEnum()}
@@ -139,6 +196,7 @@ export default function HowTo() {
               />
             </Card>
             <Card
+              key="categories"
               style={AppStyle.card}
               header={() => Header("Game Categories")}
             >
@@ -148,7 +206,11 @@ export default function HowTo() {
                 renderItem={renderItem}
               />
             </Card>
-            <Card style={AppStyle.card} header={() => Header("Game Level")}>
+            <Card
+              key="level"
+              style={AppStyle.card}
+              header={() => Header("Game Level")}
+            >
               <List
                 data={gameLevelEnum()}
                 ItemSeparatorComponent={Divider}
@@ -156,6 +218,7 @@ export default function HowTo() {
               />
             </Card>
             <Card
+              key="gameplay-matrixsum"
               style={AppStyle.card}
               header={() => Header("Game Play : MatrixSum")}
             >
@@ -172,6 +235,13 @@ export default function HowTo() {
               <Text>
                 In this Column, one element is hidden, two non-hidden elements
                 and addition of those elements are given as clue.
+              </Text>
+              <Divider style={AppStyle.devider} />
+              <Text category="label">Adding Diagonal</Text>
+              {MatrixDesc(diagonalSumMatrixValue)}
+              <Text>
+                Diagonal Clues are something special which helps finding hidden
+                elements faster
               </Text>
             </Card>
           </Layout>

@@ -5,7 +5,7 @@ export const gameTypeEnum = () => [
     name: "Matrixsum",
     value: "matrixsum",
     description:
-      "In MatrixSum type, Sum of row/column elements are derived as Clues.",
+      "Nemer Series plotted as hidden and non-hidden elements. Sum of row/column elements are shown as Clues.",
   },
 ];
 export const gameCategoryEnum = () => [
@@ -15,15 +15,15 @@ export const gameCategoryEnum = () => [
   { name: "5 x 5", value: 5, description: "5 x 5 matrix" },
 ];
 export const gameLevelEnum = () => [
-  { name: "Easy", value: 0.3, description: "Minimal hidden elements" },
+  { name: "Easy", value: 0.2, description: "Minimal hidden elements" },
   {
     name: "Moderate",
-    value: 0.5,
+    value: 0.4,
     description: "Moderate hidden elements",
   },
   {
     name: "Difficult",
-    value: 0.7,
+    value: 0.6,
     description: "Challenging hidden elements",
   },
 ];

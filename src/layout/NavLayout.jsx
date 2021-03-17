@@ -7,13 +7,19 @@ import TypeLayout from "./TypeLayout";
 import CategoryLayout from "./CategoryLayout";
 import LevelLayout from "./LevelLayout";
 import HowTo from "./HowTo";
+import AdScreen from "./AdScreen"
 
 const Stack = createStackNavigator();
 
 export const NavLayout = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="GameType">
+      <Stack.Navigator initialRouteName="AdScreen">
+      <Stack.Screen
+          name="adScreen"
+          component={AdScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="GameType"
           component={TypeLayout}

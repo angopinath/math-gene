@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet } from "react-native";
 import { Modal, Card, Button, Icon, Layout, Text } from "@ui-kitten/components";
+import { AdMobBanner, AdMobRewarded } from "expo-ads-admob";
+import { clueAdId, nextLevelAdId } from "../services/AdService";
 
 import PossibleValues from "./PossibleValues";
 import Matrix from "./Matrix";
@@ -42,6 +44,7 @@ const Game = (props) => {
         setwonModelVisible(false);
         props.nextLevel();
       }, 3000);
+      nextLevelAd();
     }
   }, [noOfHiddenValues]);
 
@@ -120,6 +123,12 @@ const Game = (props) => {
           })}
       </Layout>
     );
+  };
+
+  const nextLevelAd = async () => {
+    await AdMobRewarded.setAdUnitID(nextLevelAdId);
+    await AdMobRewarded.requestAdAsync();
+    await AdMobRewarded.showAdAsync();
   };
 
   return (
@@ -202,6 +211,14 @@ const Game = (props) => {
           </React.Fragment>
         </Layout>
       </Layout>
+      <AdMobBanner
+        bannerSize="fullBanner"
+        adUnitID={clueAdId}
+        servePersonalizedAds="true"
+        onDidFailToReceiveAdWithError={() => {
+          console.log("error loading ad");
+        }}
+      />
     </React.Fragment>
   );
 };

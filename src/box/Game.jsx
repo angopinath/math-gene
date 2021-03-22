@@ -194,7 +194,6 @@ const Game = (props) => {
                   header: "Congrats..!",
                   txt: "Loading new Level..",
                 },
-                backtrop: true,
               }}
             />
             <PopupModel
@@ -205,7 +204,6 @@ const Game = (props) => {
                   header: "You Lost..!",
                   txt: "Reloading..",
                 },
-                backtrop: true,
               }}
             />
           </React.Fragment>

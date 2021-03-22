@@ -1,5 +1,12 @@
 import React from "react";
-import { Layout, Modal, Text, Icon } from "@ui-kitten/components";
+import {
+  Layout,
+  Modal,
+  Text,
+  Icon,
+  Button,
+  ButtonGroup,
+} from "@ui-kitten/components";
 import AppStyle from "../style/AppStyle";
 import { useEffect, useState } from "react";
 
@@ -22,10 +29,18 @@ const styles = {
     borderColor: "#0057C2",
     icon: "smiling-face",
   },
+  question: {
+    color: "#0057C2",
+    backgroundColor: "#F2F8FF",
+    borderColor: "#0057C2",
+    icon: "question-mark-circle",
+    yesText: "Yes!",
+    noText: "No..",
+  },
 };
 
 export const PopupModel = (props) => {
-  const { type, msg, backtrop } = props.data;
+  const { type, msg, yesCallBack, noCallBack } = props.data;
   const style = styles[type || "info"];
 
   return (
@@ -33,7 +48,7 @@ export const PopupModel = (props) => {
       <Modal
         visible={props.visible}
         style={AppStyle.model_model}
-        backdropStyle={backtrop && AppStyle.model_backdrop}
+        backdropStyle={AppStyle.model_backdrop}
       >
         <Layout
           style={[
@@ -55,6 +70,33 @@ export const PopupModel = (props) => {
           <Text category="h6" style={{ color: style.color }}>
             {msg.txt}
           </Text>
+          {style == styles.question && (
+            <Layout
+              style={
+                ([AppStyle.layoutBackground],
+                {
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                })
+              }
+            >
+              <Button
+                appearance="filled"
+                status="info"
+                onPress={() => yesCallBack()}
+                style={{ marginRight: 10 }}
+              >
+                {style.yesText}
+              </Button>
+              <Button
+                appearance="outline"
+                status="danger"
+                onPress={() => noCallBack()}
+              >
+                {style.noText}
+              </Button>
+            </Layout>
+          )}
         </Layout>
       </Modal>
     </React.Fragment>

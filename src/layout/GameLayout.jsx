@@ -7,6 +7,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Game from "../box/Game";
 import { generateGame } from "../services/Core";
 import AppStyle from "../style/AppStyle";
+import { PopupModel } from "../box/Model";
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
 const ResetIcon = (props) => <Icon {...props} name="refresh" />;
@@ -18,6 +19,7 @@ export default function GameLayout({ route, navigation }) {
     generateGame(vector.value, level.value)
   );
   const [levelCounter, setLevelCounter] = useState(1);
+  const [goBackModelVisible, setGoBackModelVisible] = useState(false);
 
   var initGame = () => {
     const _gameValues = generateGame(vector.value, level.value);
@@ -41,6 +43,20 @@ export default function GameLayout({ route, navigation }) {
   const howToNav = () => {
     navigation.navigate("HowTo");
   };
+
+  useEffect(() => {
+    navigation.addListener("beforeRemove", (e) => {
+      const action = e.data.action;
+      console.log(action);
+      e.preventDefault();
+      if (action.type == "GO_BACK") {
+        setGoBackModelVisible(true);
+      }
+    });
+  }, [navigation]);
+
+  const yesCallBackFunc = () => {};
+  const noCallBackFunc = () => {};
 
   return (
     <>
@@ -70,6 +86,18 @@ export default function GameLayout({ route, navigation }) {
           howToNav={howToNav}
         />
       </LinearGradient>
+      <PopupModel
+        visible={goBackModelVisible}
+        data={{
+          type: "question",
+          msg: {
+            header: "Are You Sure !!",
+            txt: "-",
+          },
+          yesCallBack: yesCallBackFunc,
+          noCallBack: noCallBackFunc,
+        }}
+      />
     </>
   );
 }

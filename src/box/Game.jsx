@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet } from "react-native";
 import { Modal, Card, Button, Icon, Layout, Text } from "@ui-kitten/components";
-import { AdMobBanner, AdMobRewarded } from "expo-ads-admob";
-import { clueAdId, nextLevelAdId } from "../services/AdService";
+import { AdMobBanner } from "expo-ads-admob";
+import { clueAdId, showRewardAd } from "../services/AdService";
 
 import PossibleValues from "./PossibleValues";
 import Matrix from "./Matrix";
+import Life from "./Life";
 import { PopupModel } from "./Model";
 import AppStyle from "../style/AppStyle";
 
@@ -44,7 +45,7 @@ const Game = (props) => {
         setwonModelVisible(false);
         props.nextLevel();
       }, 3000);
-      nextLevelAd();
+      showRewardAd();
     }
   }, [noOfHiddenValues]);
 
@@ -106,29 +107,8 @@ const Game = (props) => {
     setSelectedElement(el);
   };
 
-  const heartCounts = () => {
-    return (
-      <Layout style={[AppStyle.layoutBackground, AppStyle.gameHeartLayout]}>
-        {Array(falseAttempt)
-          .fill(0)
-          .map((i, index) => {
-            return (
-              <Icon
-                style={AppStyle.gameHeart}
-                key={index}
-                fill="#FF3D71"
-                name="heart"
-              />
-            );
-          })}
-      </Layout>
-    );
-  };
-
-  const nextLevelAd = async () => {
-    await AdMobRewarded.setAdUnitID(nextLevelAdId);
-    await AdMobRewarded.requestAdAsync();
-    await AdMobRewarded.showAdAsync();
+  const lifeCallBackFunc = () => {
+    setFalseAttempt(falseAttempt + 1);
   };
 
   return (
@@ -173,7 +153,7 @@ const Game = (props) => {
           />
         </Layout>
         <Layout style={[styles.actionLayer, styles.transparent]}>
-          {heartCounts()}
+          <Life life={falseAttempt} lifeCallBack={lifeCallBackFunc} />
           {/* <Button
             style={styles.button}
             status="info"

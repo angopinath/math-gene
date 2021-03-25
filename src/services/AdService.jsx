@@ -1,6 +1,7 @@
 import React from "react";
 import { Platform } from "react-native";
 import Constants from "expo-constants";
+import { AdMobRewarded } from "expo-ads-admob";
 
 // clue ad section
 const clueAdTestId = Platform.select({
@@ -29,3 +30,9 @@ const nextLevelAdProdId = Platform.select({
 
 export const nextLevelAdId =
   Constants.isDevice && !__DEV__ ? nextLevelAdProdId : nextLevelAdTestId;
+
+export const showRewardAd = async () => {
+  await AdMobRewarded.setAdUnitID(nextLevelAdId);
+  await AdMobRewarded.requestAdAsync();
+  await AdMobRewarded.showAdAsync();
+};

@@ -8,6 +8,7 @@ import Game from "../box/Game";
 import { generateGame } from "../services/Core";
 import AppStyle from "../style/AppStyle";
 import { PopupModel } from "../box/Model";
+import { showRewardAd } from "../services/AdService";
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
 const ResetIcon = (props) => <Icon {...props} name="refresh" />;
@@ -20,6 +21,7 @@ export default function GameLayout({ route, navigation }) {
   );
   const [levelCounter, setLevelCounter] = useState(1);
   const [goBackModelVisible, setGoBackModelVisible] = useState(false);
+  const [backAction, setBackAction] = useState(null);
 
   var initGame = () => {
     const _gameValues = generateGame(vector.value, level.value);
@@ -47,16 +49,25 @@ export default function GameLayout({ route, navigation }) {
   useEffect(() => {
     navigation.addListener("beforeRemove", (e) => {
       const action = e.data.action;
+
       console.log(action);
       e.preventDefault();
       if (action.type == "GO_BACK") {
+        setBackAction(action);
         setGoBackModelVisible(true);
       }
     });
   }, [navigation]);
 
-  const yesCallBackFunc = () => {};
-  const noCallBackFunc = () => {};
+  const yesCallBackFunc = () => {
+    showRewardAd();
+    navigation.dispatch(backAction);
+    console.log("yes call back called");
+  };
+  const noCallBackFunc = () => {
+    setGoBackModelVisible(false);
+    console.log("no call back called");
+  };
 
   return (
     <>

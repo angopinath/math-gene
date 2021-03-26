@@ -8,7 +8,6 @@ import AppStyle from "../style/AppStyle";
 const Life = (props) => {
   const DEFAULT_LIFE_COUNT = 3;
   const { life, lifeCallBack } = props;
-  console.log(life);
 
   const showRewardAd = async () => {
     await AdMobRewarded.setAdUnitID(nextLevelAdId);

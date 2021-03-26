@@ -7,17 +7,13 @@ export function generateGame(level, diffLevel) {
     const noOfDisableElement = Math.ceil(dimension * diffLevel)
 
     const randomArr = random.getRandomSequanceArray(dimension)
-    console.log('randomArr', randomArr)
     const randomBolArr = random.getRandomBoolanArray(dimension, noOfDisableElement)
     const dbolArr = matrix.createBooleanMatrix(randomBolArr, ground)
     
     const darray = matrix.createMatrix(randomArr, ground)
     const rowSums = matrix.getAllRowSum(darray)
-    console.log("rowSums:"+ rowSums)
     const colSums = matrix.getAllColumnSum(darray)
-    console.log("colSums:"+ colSums)
     const diagonalSum = matrix.getDiagonalSum(darray)
-    console.log("diagonalSum:"+ diagonalSum)
 
     var data = []
 

@@ -28,13 +28,6 @@ const PossibleValues1 = (props) => {
       }
     }
 
-    // if (props.values.length > maxButtonPerRow) {
-    //   arr.push(props.values.slice(0, props.values.length / 2));
-    //   arr.push(props.values.slice(props.values.length / 2));
-    // } else {
-    //   arr.push(props.values);
-    // }
-    console.log("splited arr", arr);
     return arr;
   };
 
@@ -44,7 +37,6 @@ const PossibleValues1 = (props) => {
         <Button
           key={index}
           onPress={() => {
-            console.log("possible value is clicked", val);
             props.onPossibleValueClick(val);
           }}
         >
@@ -55,7 +47,6 @@ const PossibleValues1 = (props) => {
   };
 
   var buttonGroupList = splitArray().map((btnarr, index) => {
-    console.log("parent arr,", btnarr);
     return (
       <ButtonGroup
         style={{ margin: 2 }}

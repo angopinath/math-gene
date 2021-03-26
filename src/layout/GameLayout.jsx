@@ -15,7 +15,6 @@ const ResetIcon = (props) => <Icon {...props} name="refresh" />;
 
 export default function GameLayout({ route, navigation }) {
   const { vector, level, type } = route.params || { vector: 2, level: 0.6 };
-  console.log(vector, level, type);
   const [gameValues, setGameValues] = useState(
     generateGame(vector.value, level.value)
   );
@@ -29,7 +28,6 @@ export default function GameLayout({ route, navigation }) {
   };
 
   var refreshGame = () => {
-    console.log("refresh called");
     initGame();
   };
 
@@ -49,8 +47,6 @@ export default function GameLayout({ route, navigation }) {
   useEffect(() => {
     navigation.addListener("beforeRemove", (e) => {
       const action = e.data.action;
-
-      console.log(action);
       e.preventDefault();
       if (action.type == "GO_BACK") {
         setBackAction(action);
@@ -62,11 +58,9 @@ export default function GameLayout({ route, navigation }) {
   const yesCallBackFunc = () => {
     showRewardAd();
     navigation.dispatch(backAction);
-    console.log("yes call back called");
   };
   const noCallBackFunc = () => {
     setGoBackModelVisible(false);
-    console.log("no call back called");
   };
 
   return (

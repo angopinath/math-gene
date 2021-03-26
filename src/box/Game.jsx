@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet } from "react-native";
 import { Modal, Card, Button, Icon, Layout, Text } from "@ui-kitten/components";
-import { AdMobBanner } from "expo-ads-admob";
-import { clueAdId, showRewardAd } from "../services/AdService";
+import { AdMobBanner, AdMobRewarded } from "expo-ads-admob";
+import { clueAdId, nextLevelAdId, showRewardAd } from "../services/AdService";
 
 import PossibleValues from "./PossibleValues";
 import Matrix from "./Matrix";
@@ -70,30 +70,23 @@ const Game = (props) => {
   };
 
   var matrixRerender = (id) => {
-    console.log("id " + id);
     const newMatrix = matrix.map((row, ri) => {
       return row.map((col, ci) => {
         return col.id == id ? { ...col, isHidden: !col.isHidden } : col;
       });
     });
-    console.log("new matrix", newMatrix);
     return newMatrix;
   };
   const onAnsSelectionCallback = (val) => {
-    console.log("on ans select clicked", val);
-    console.log("selected element", selectedElement, "selected ans", val);
     if (selectedElement && val) {
       setPossibleValuesShow(false);
 
       if (selectedElement.value == val) {
-        console.log("correct ans");
         setwrongAnswerModelVisible(false);
         setcorrectAnswerModelVisible(true);
         setMatrix(matrixRerender(selectedElement.id));
         setNoOfHiddenValues(noOfHiddenValues - 1);
       } else {
-        console.log("wrong answer.. try again");
-
         setcorrectAnswerModelVisible(false);
         setwrongAnswerModelVisible(true);
         setFalseAttempt(falseAttempt - 1);
@@ -110,6 +103,15 @@ const Game = (props) => {
   const lifeCallBackFunc = () => {
     setFalseAttempt(falseAttempt + 1);
   };
+  const showClueUnlockRewardAd = async () => {
+    await AdMobRewarded.setAdUnitID(nextLevelAdId);
+    await AdMobRewarded.addEventListener("rewardedVideoDidClose", () => {
+      unlockRandomClues();
+    });
+    await AdMobRewarded.requestAdAsync();
+    await AdMobRewarded.showAdAsync();
+  };
+  const unlockRandomClues = () => {};
 
   return (
     <React.Fragment>
@@ -129,7 +131,7 @@ const Game = (props) => {
                   status="success"
                   style={{ alignSelf: "center" }}
                 >
-                  Awesome.. Keep Going..
+                  Excellent
                 </Text>
               )}
               {wrongAnswerModelVisible && (
@@ -138,7 +140,7 @@ const Game = (props) => {
                   status="warning"
                   style={{ alignSelf: "center" }}
                 >
-                  Losing my heart, Try Hard
+                  You need to think more..
                 </Text>
               )}
             </Layout>
@@ -154,17 +156,23 @@ const Game = (props) => {
         </Layout>
         <Layout style={[styles.actionLayer, styles.transparent]}>
           <Life life={falseAttempt} lifeCallBack={lifeCallBackFunc} />
-          {/* <Button
-            style={styles.button}
-            status="info"
-            accessoryLeft={(props) => <Icon {...props} name="bulb" />}
-          ></Button> */}
-          <Button
-            style={styles.button}
-            status="warning"
-            onPress={() => props.howToNav()}
-            accessoryLeft={(props) => <Icon {...props} name="question-mark" />}
-          ></Button>
+          <Icon
+            style={AppStyle.gameHeart}
+            fill="#FFF"
+            name="bulb-outline"
+            onPress={() => {
+              showClueUnlockRewardAd();
+            }}
+          />
+          <Icon
+            style={AppStyle.gameHeart}
+            fill="#FFF"
+            name="question-mark-circle"
+            onPress={() => {
+              props.howToNav();
+            }}
+          />
+
           <React.Fragment>
             <PopupModel
               visible={wonModelVisible}
@@ -193,9 +201,7 @@ const Game = (props) => {
         bannerSize="fullBanner"
         adUnitID={clueAdId}
         servePersonalizedAds="true"
-        onDidFailToReceiveAdWithError={() => {
-          console.log("error loading ad");
-        }}
+        onDidFailToReceiveAdWithError={() => {}}
       />
     </React.Fragment>
   );

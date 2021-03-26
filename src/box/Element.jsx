@@ -15,7 +15,6 @@ const Element = (props) => {
   const theme = useTheme();
 
   const onButtonClick = () => {
-    console.log("element is selected");
     props.onPress(props.element);
   };
 

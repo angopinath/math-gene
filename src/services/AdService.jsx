@@ -1,38 +1,58 @@
-import React from "react";
 import { Platform } from "react-native";
 import Constants from "expo-constants";
-import { AdMobRewarded } from "expo-ads-admob";
+import { AdMobRewarded, AdMobInterstitial } from "expo-ads-admob";
 
-// clue ad section
-const clueAdTestId = Platform.select({
+// banner ad section
+const bannerAdTestId = Platform.select({
   ios: "ca-app-pub-3940256099942544/2934735716",
   android: "ca-app-pub-3940256099942544/6300978111",
 });
 
-const clueAdProdId = Platform.select({
+const bannerAdProdId = Platform.select({
   ios: "ca-app-pub-6608023280307674/4420885109",
   android: "ca-app-pub-6608023280307674/6484490406",
 });
 
-export const clueAdId =
-  Constants.isDevice && !__DEV__ ? clueAdProdId : clueAdTestId;
+export const bannerAdId =
+  Constants.isDevice && !__DEV__ ? bannerAdProdId : bannerAdTestId;
 
-//next-level add section
-const nextLevelAdTestId = Platform.select({
+//reward add section
+const rewardAdTestId = Platform.select({
   ios: "ca-app-pub-3940256099942544/1712485313",
   android: "ca-app-pub-3940256099942544/5224354917",
 });
 
-const nextLevelAdProdId = Platform.select({
+const rewardAdProdId = Platform.select({
   ios: "ca-app-pub-6608023280307674/5909775337",
   android: "ca-app-pub-6608023280307674/1232163720",
 });
 
-export const nextLevelAdId =
-  Constants.isDevice && !__DEV__ ? nextLevelAdProdId : nextLevelAdTestId;
+export const rewardAdId =
+  Constants.isDevice && !__DEV__ ? rewardAdProdId : rewardAdTestId;
 
 export const showRewardAd = async () => {
-  await AdMobRewarded.setAdUnitID(nextLevelAdId);
+  await AdMobRewarded.setAdUnitID(rewardAdId);
   await AdMobRewarded.requestAdAsync();
   await AdMobRewarded.showAdAsync();
+};
+
+// image add section
+
+const imageAdTestId = Platform.select({
+  ios: "ca-app-pub-3940256099942544/4411468910",
+  android: "ca-app-pub-3940256099942544/1033173712",
+});
+
+const imageAdProdId = Platform.select({
+  ios: "ca-app-pub-6608023280307674/2765086299",
+  android: "ca-app-pub-6608023280307674/8558121416",
+});
+
+export const imageAdId =
+  Constants.isDevice && !__DEV__ ? imageAdProdId : imageAdTestId;
+
+export const showImageAd = async () => {
+  await AdMobInterstitial.setAdUnitID(imageAdId);
+  await AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true });
+  await AdMobInterstitial.showAdAsync();
 };

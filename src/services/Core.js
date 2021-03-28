@@ -27,7 +27,7 @@ export function generateGame(level, diffLevel) {
     });
     
     dataObjects.unshift(topClues)
-    return {possibleValues: randomArr.sort((a,b) => a-b), matrix: dataObjects, noOfHiddenValues: noOfDisableElement}
+    return {possibleValues: randomArr.sort((a,b) => a-b), matrix: dataObjects, hiddenValues: getHiddenElements(dataObjects)}
 }
 
 function createClues(arr) {
@@ -40,7 +40,19 @@ function createClues(arr) {
 function createDataObjects(darray, dbolArr) {
     return darray.map((row, rindex) => {
         return row.map((col, cindex) => {
-            return {id: 'r'+rindex+cindex ,isClue: false, isHidden: dbolArr[rindex][cindex], value: col }
+            return {id: 'r'+rindex+cindex ,isClue: false, isHidden: !!dbolArr[rindex][cindex], value: col }
         })
     })
+}
+
+function getHiddenElements(matrix) {
+    var hiddenElement = [];
+    matrix.forEach((row, rindex) => {
+        row.forEach((col, cindex) => {
+            if(col.isHidden){
+                hiddenElement.push({rowIndex: rindex, colIndex: cindex, value: col.value})
+            }
+        })
+    })
+    return hiddenElement
 }

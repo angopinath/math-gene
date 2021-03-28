@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Icon, Layout } from "@ui-kitten/components";
 import { AdMobRewarded } from "expo-ads-admob";
-import { nextLevelAdId } from "../services/AdService";
+import { rewardAdId } from "../services/AdService";
 
 import AppStyle from "../style/AppStyle";
 
@@ -10,7 +10,7 @@ const Life = (props) => {
   const { life, lifeCallBack } = props;
 
   const showRewardAd = async () => {
-    await AdMobRewarded.setAdUnitID(nextLevelAdId);
+    await AdMobRewarded.setAdUnitID(rewardAdId);
     await AdMobRewarded.addEventListener("rewardedVideoDidClose", () => {
       lifeCallBack();
     });

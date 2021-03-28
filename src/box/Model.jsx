@@ -1,14 +1,6 @@
 import React from "react";
-import {
-  Layout,
-  Modal,
-  Text,
-  Icon,
-  Button,
-  ButtonGroup,
-} from "@ui-kitten/components";
+import { Layout, Modal, Text, Icon, Button } from "@ui-kitten/components";
 import AppStyle from "../style/AppStyle";
-import { useEffect, useState } from "react";
 
 const styles = {
   info: {

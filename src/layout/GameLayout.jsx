@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { Layout, Text } from "@ui-kitten/components";
 import { LinearGradient } from "expo-linear-gradient";
@@ -8,10 +8,7 @@ import Game from "../box/Game";
 import { generateGame } from "../services/Core";
 import AppStyle from "../style/AppStyle";
 import { PopupModel } from "../box/Model";
-import { showRewardAd } from "../services/AdService";
-
-const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
-const ResetIcon = (props) => <Icon {...props} name="refresh" />;
+import { showImageAd } from "../services/AdService";
 
 export default function GameLayout({ route, navigation }) {
   const { vector, level, type } = route.params || { vector: 2, level: 0.6 };
@@ -56,7 +53,7 @@ export default function GameLayout({ route, navigation }) {
   }, [navigation]);
 
   const yesCallBackFunc = () => {
-    showRewardAd();
+    showImageAd();
     navigation.dispatch(backAction);
   };
   const noCallBackFunc = () => {

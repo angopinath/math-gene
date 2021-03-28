@@ -17,14 +17,22 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "buildNumber": "3.0.0",
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-6608023280307674~4788265354"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.nty.games"
+      "package": "com.nty.games",
+      "versionCode": 3,
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-6608023280307674~5015781479"
+      }
     },
     "web": {
       "favicon": "./assets/icon.png"

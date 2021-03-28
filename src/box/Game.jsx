@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet } from "react-native";
-import { Modal, Card, Button, Icon, Layout, Text } from "@ui-kitten/components";
+import { Icon, Layout, Text } from "@ui-kitten/components";
 import { AdMobBanner, AdMobRewarded } from "expo-ads-admob";
-import { clueAdId, nextLevelAdId, showRewardAd } from "../services/AdService";
+import { bannerAdId, rewardAdId, showImageAd } from "../services/AdService";
 
 import PossibleValues from "./PossibleValues";
 import Matrix from "./Matrix";
@@ -15,8 +15,8 @@ const Game = (props) => {
     props.gameInput.possibleValues
   );
   const [matrix, setMatrix] = useState(props.gameInput.matrix);
-  const [noOfHiddenValues, setNoOfHiddenValues] = useState(
-    props.gameInput.noOfHiddenValues
+  const [hiddenValues, setHiddenValues] = useState(
+    props.gameInput.hiddenValues
   );
   const [selectedElement, setSelectedElement] = useState({});
   const [falseAttempt, setFalseAttempt] = useState(3);
@@ -32,22 +32,22 @@ const Game = (props) => {
   useEffect(() => {
     setPossibleValues(props.gameInput.possibleValues);
     setMatrix(props.gameInput.matrix);
-    setNoOfHiddenValues(props.gameInput.noOfHiddenValues);
+    setHiddenValues(props.gameInput.hiddenValues);
     return () => {
       reset();
     };
   }, [props]);
 
   useEffect(() => {
-    if (noOfHiddenValues == 0) {
+    if (hiddenValues.length == 0) {
       setwonModelVisible(true);
       setTimeout(() => {
         setwonModelVisible(false);
         props.nextLevel();
       }, 3000);
-      showRewardAd();
+      showImageAd();
     }
-  }, [noOfHiddenValues]);
+  }, [hiddenValues]);
 
   useEffect(() => {
     if (falseAttempt == 0) {
@@ -85,7 +85,9 @@ const Game = (props) => {
         setwrongAnswerModelVisible(false);
         setcorrectAnswerModelVisible(true);
         setMatrix(matrixRerender(selectedElement.id));
-        setNoOfHiddenValues(noOfHiddenValues - 1);
+        setHiddenValues(
+          hiddenValues.filter((h) => h.value != selectedElement.value)
+        );
       } else {
         setcorrectAnswerModelVisible(false);
         setwrongAnswerModelVisible(true);
@@ -104,14 +106,26 @@ const Game = (props) => {
     setFalseAttempt(falseAttempt + 1);
   };
   const showClueUnlockRewardAd = async () => {
-    await AdMobRewarded.setAdUnitID(nextLevelAdId);
+    await AdMobRewarded.setAdUnitID(rewardAdId);
     await AdMobRewarded.addEventListener("rewardedVideoDidClose", () => {
       unlockRandomClues();
     });
     await AdMobRewarded.requestAdAsync();
     await AdMobRewarded.showAdAsync();
   };
-  const unlockRandomClues = () => {};
+  const unlockRandomClues = () => {
+    if (hiddenValues && hiddenValues.length > 1) {
+      _index = Math.floor(Math.random() * hiddenValues.length) + 0;
+      popElement = hiddenValues[_index];
+      _matrix = [...matrix];
+      _matrix[popElement.rowIndex][popElement.colIndex] = {
+        ..._matrix[popElement.rowIndex][popElement.colIndex],
+        isHidden: false,
+      };
+      setMatrix(_matrix);
+      setHiddenValues(hiddenValues.splice(_index, 1));
+    }
+  };
 
   return (
     <React.Fragment>
@@ -127,16 +141,16 @@ const Game = (props) => {
             <Layout style={[styles.clueLayer, styles.transparent]}>
               {correctAnswerModelVisible && (
                 <Text
-                  category="h5"
+                  category="h6"
                   status="success"
                   style={{ alignSelf: "center" }}
                 >
-                  Excellent
+                  Excellent.. keep doing..
                 </Text>
               )}
               {wrongAnswerModelVisible && (
                 <Text
-                  category="h5"
+                  category="h6"
                   status="warning"
                   style={{ alignSelf: "center" }}
                 >
@@ -199,7 +213,7 @@ const Game = (props) => {
       </Layout>
       <AdMobBanner
         bannerSize="fullBanner"
-        adUnitID={clueAdId}
+        adUnitID={bannerAdId}
         servePersonalizedAds="true"
         onDidFailToReceiveAdWithError={() => {}}
       />

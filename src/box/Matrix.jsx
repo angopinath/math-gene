@@ -1,6 +1,6 @@
-import React, { forwardRef, useImperativeHandle, useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { Button, Layout, Text } from "@ui-kitten/components";
+import React from "react";
+import { StyleSheet } from "react-native";
+import { Layout } from "@ui-kitten/components";
 import Element from "./Element";
 
 const Matrix = (props) => {
